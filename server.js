@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 
 */
 
-router.post('/register',function(req,res){
+app.post('/register',function(req,res){
     const {err, isValid} = validateRegisterInput(req.body);
     if(!isValid){
        return res.status(400).json(err);    
@@ -56,7 +56,7 @@ router.post('/register',function(req,res){
       });
 
 
-      router.post('/login', (req,res) => {
+      app.post('/login', (req,res) => {
       const {err, isValid} = validateLoginInput;
       const email= req.body.email;
       const password=req.body.password;
