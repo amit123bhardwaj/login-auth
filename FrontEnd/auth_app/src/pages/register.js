@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import { Button } from 'antd';
 class RegisterPage extends React.Component{
 
     state={
@@ -39,28 +39,36 @@ class RegisterPage extends React.Component{
           curEmail:'',
           curPassword:'',
           confirmPassword:'',
-      })
+      });
 
-      const {history} = this.props;
+      const { history } = this.props;
       history.push('/info');
     }
      
     render(){
-        return <div>
+        return <div style={{width:'100%'}}>
             <form>
+                <div>
                 Name:
+                </div>
                 <input value={this.state.curName} onChange={this.handleNameChange}/>
                 <br/>
+                <div>
                 Email:
+                </div>
                 <input value={this.state.curEmail} onChange={this.handleEmailChange}/>
                 <br/>
+                <div>
                 Password:
+                </div>
                 <input value={this.state.curPassword} onChange={this.handlePasswordChange}/>
                 <br/>
+                <div>
                 Confirm Password:
+                </div>
                 <input value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange}/>
                 <br/>
-                <button onClick={this.handleFormSubmit}>Submit</button>
+                <Button type="primary" onClick={this.handleFormSubmit}>Submit</Button>
             </form>
         </div>
     }

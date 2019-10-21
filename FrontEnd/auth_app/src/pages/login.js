@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button } from 'antd';
 
 class LoginPage extends React.Component{
     state={
@@ -14,27 +15,30 @@ class LoginPage extends React.Component{
     }
     handleFormSubmit=(e)=>{
         e.preventDefault();
-        const email= this.state.email;
-        const password= this.state.password;
+        const email= this.state.currEmail;
+        const password= this.state.currPassword;
         axios.post('http://localhost:5000/login',{email,password}).then(resp=>console.log('resp',resp));
-
+        const { history } = this.props;
+        history.push('/info');
     }
 
 render(){
-    return <div>
-       <form >
-        <span>
+    return <div style={{width:'100%'}}>
+       <form>
+          <div> 
             Email
+          </div>
          <input value={this.state.currEmail} onChange={this.handleEmailChange}/>
-         </span>
+         
          <br/>
-         <span>
+        <div>
             Password
+        </div>
          <input value={this.state.currPassword} onChange={this.handlePasswordChange}/>
-         </span>
+         
           <br/>
-          <button onClick={this.handleFormSubmit}> Submit</button>
        </form>
+       <Button onClick={this.handleFormSubmit}> Submit</Button>
        </div> 
 }
 }
