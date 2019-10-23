@@ -11,4 +11,4 @@ export const userReducer=(state=defaultState,action)=>{
      state.user=action.userData;
      return state;
     }
-}
+};

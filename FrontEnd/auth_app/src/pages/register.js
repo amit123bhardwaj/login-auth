@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from 'antd';
 import InfoPage from './info';
-import {connect } from 'react-redux';
-import {getUserData} from '../action/userAction';
+import { connect } from 'react-redux';
+import { getUserData } from '../action/userAction';
 import { bindActionCreators } from 'redux';
 class RegisterPage extends React.Component{
 
@@ -41,14 +41,17 @@ class RegisterPage extends React.Component{
     //     password2:this.state.confirmPassword})
     //     .then(resp=>{
     //                 console.log('resp', resp.data);
-    //                 this.setState({response:resp.data})
+    //                 this.setState({response:{...resp.data}})
     //       });
+
+    //    console.log('response', this.state.response);
     const body={name:this.state.curName,
         email:this.state.curEmail,
         password:this.state.curPassword,
         password2:this.state.confirmPassword};
         this.setState({response:body});
-        this.props.getUserData();
+        console.log('before action dispatch');
+        this.props.getUserData(body);
       this.setState({
           curName:'',
           curEmail:'',
@@ -56,8 +59,9 @@ class RegisterPage extends React.Component{
           confirmPassword:'',
       });
 
-      const { history } = this.props;
-      history.push('/info');
+    //   const { history } = this.props;
+    //   history.push('/info');
+        // <InfoPage userData={this.state.response}/>
     }
      
     render(){
@@ -85,6 +89,7 @@ class RegisterPage extends React.Component{
                 <br/>
                 <Button type="primary" onClick={this.handleFormSubmit}>Submit</Button>
             </form>
+            <Button></Button>
         </div>
     }
 };
@@ -94,8 +99,7 @@ const mapStateToProps =(userReducer,ownProps) =>{
 }
 
 const mapDispatchToProps= (dispatch) => {
-    bindActionCreators(getUserData()
-        ,dispatch);
+  return  bindActionCreators({getUserData},dispatch)
 }
 export default connect(mapStateToProps,mapDispatchToProps)(RegisterPage);
 
