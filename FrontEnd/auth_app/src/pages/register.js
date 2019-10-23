@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Button } from 'antd';
+import InfoPage from './info';
+import {connect } from 'react-redux';
+import {getUserData} from '../action/userAction';
+import { bindActionCreators } from 'redux';
 class RegisterPage extends React.Component{
 
     state={
@@ -8,6 +12,7 @@ class RegisterPage extends React.Component{
       curEmail:undefined,
       curPassword:undefined,
       confirmPassword:undefined,
+      response:{},
      };
 
     handleNameChange=(e)=>{
@@ -28,12 +33,22 @@ class RegisterPage extends React.Component{
       const email= this.state.email;
       const password= this.state.password;
       const password2= this.state.password2;
-      axios.post('http://localhost:5000/register',
-      {name:this.state.curName,
+      
+    //   axios.post('http://localhost:5000/register',
+    //   {name:this.state.curName,
+    //     email:this.state.curEmail,
+    //     password:this.state.curPassword,
+    //     password2:this.state.confirmPassword})
+    //     .then(resp=>{
+    //                 console.log('resp', resp.data);
+    //                 this.setState({response:resp.data})
+    //       });
+    const body={name:this.state.curName,
         email:this.state.curEmail,
         password:this.state.curPassword,
-        password2:this.state.confirmPassword})
-        .then(resp=>console.log('resp', resp.data));
+        password2:this.state.confirmPassword};
+        this.setState({response:body});
+        this.props.getUserData();
       this.setState({
           curName:'',
           curEmail:'',
@@ -72,5 +87,18 @@ class RegisterPage extends React.Component{
             </form>
         </div>
     }
+};
+
+const mapStateToProps =(userReducer,ownProps) =>{
+     return  {userData:userReducer};
 }
-export default RegisterPage;
+
+const mapDispatchToProps= (dispatch) => {
+    bindActionCreators(getUserData()
+        ,dispatch);
+}
+export default connect(mapStateToProps,mapDispatchToProps)(RegisterPage);
+
+
+
+

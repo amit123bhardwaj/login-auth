@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Col, Row } from 'antd';
 
 
@@ -6,11 +6,12 @@ import { Col, Row } from 'antd';
 class InfoPage extends React.Component{
 
     render(){
+      const {user} = this.props;
      return <div> <Row style={{display:'flex', flexDirection:'row'}}>
              <Col>
-              <span><Col>name: </Col><Col>Login User Name</Col> </span>
-              <span><Col>Email: </Col><Col>Login User Email</Col> </span>
-              <span><Col>UPdate: </Col><Col>Login User Update Password</Col> </span>
+              <span><Col>name: </Col><Col>{user ? user.name:''}</Col> </span>
+              <span><Col>Email: </Col><Col>{user ? user.email:''}</Col> </span>
+              <span><Col>Current Password: </Col><Col>{user ? user.password:''}</Col> </span>
              </Col>
               <Col>
               <img src="" alt="not found"></img> 

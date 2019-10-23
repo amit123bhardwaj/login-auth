@@ -12,9 +12,9 @@ const UserSchema= mongoose.Schema({
     type:String,
     required:true,
  },
- date:{
-    type:Date,
-    required:true,
- }
+//  date:{
+//     type:Date,
+//     required:true,
+//  }
 });
 module.exports = User = mongoose.model('users',UserSchema);

@@ -26,10 +26,14 @@ app.use(bodyParser.json());
 */
 
 app.post('/register',function(req,res){
+    console.log('data for req',req.body);
     const {err, isValid} = validateRegisterInput(req.body);
     if(!isValid){
        return res.status(400).json(err);    
     }
+    console.log('req body name',req.body.name);
+      console.log('req body email',req.body.email);
+      console.log('req body password',req.body.password);
     User.findOne({email:req.body.email}).then(user=>{
         if(user){
             return res.status(400).json({email:'user already exist'});
@@ -40,16 +44,18 @@ app.post('/register',function(req,res){
               password:req.body.password,
           });
         
-
+        console.log('new user', newUser);
         // hash password before saving
         bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(req.body.password, salt, (err, hash) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
               newUser.password = hash;
               newUser
                 .save()
                 .then(user => res.json(user))
-                .catch(err => console.log(err));
+                .catch(err => 
+                    res.status(400).json(err)
+                    );
             });
           });
         }
@@ -61,6 +67,7 @@ app.post('/register',function(req,res){
       const {err, isValid} = validateLoginInput;
       const email= req.body.email;
       const password=req.body.password;
+      
        if(!isValid){
           return res.status(400).json(err);
        }
@@ -93,7 +100,7 @@ app.post('/register',function(req,res){
            })
        })
       });
-mongoose.connect('mongodb://127.0.0.1:27017/local', { useNewUrlParser:true } );
+mongoose.connect('mongodb://127.0.0.1:27017/local', { useNewUrlParser:true,useUnifiedTopology: true  } );
 const connection = mongoose.connection;
 
 
